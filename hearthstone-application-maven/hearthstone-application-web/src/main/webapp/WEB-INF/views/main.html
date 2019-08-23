@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">SportsBetting</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="./home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./events">Events</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">English</a>
+                    <a class="dropdown-item" href="#">Magyar</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button type="button" class="btn btn-dark border">Logout</button>
+</nav>
+
+<div class="card text-white border-primary mb-3" style="margin-left: 10px !important; margin-right: 10px !important; margin-top: 20px">
+    <div class="card-header bg-primary mb-3" style="margin-bottom: 0px !important;">Account details</div>
+    <div class="card-body">
+        <form th:object="${player}" th:action="@{/processForm}" method="POST">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input type="text" th:field="*{name}" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">Date of Birth</span>
+            </div>
+            <input type="text" th:field="*{birth}" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Account number</span>
+            </div>
+            <input type="text" th:field="*{accountNumber}" class="form-control" aria-label="Username" aria-describedby="basic-addon1" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+            </div>
+            <select th:field="*{currency}" class="custom-select" id="currencySelection">
+            <option
+                th:each="c : ${currencies}"
+                th:value="${c}"
+                th:text="${c}"
+                th:selected="${c == currencyPlayer}">
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon4">Balance</span>
+            </div>
+            <input type="text" th:field="*{balance}" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+
+<div class="card text-white border-primary mb-3" style="margin-left: 10px !important; margin-right: 10px !important;">
+    <div class="card-header bg-primary mb-3" style="margin-bottom: 0px !important;">Wagers</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" style="color: black;">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">#</th>
+                    <th scope="col">Event title</th>
+                    <th scope="col">Event type</th>
+                    <th scope="col">Bet type</th>
+                    <th scope="col">Outcome value</th>
+                    <th scope="col">Outcome odd</th>
+                    <th scope="col">Wager amount</th>
+                    <th scope="col">Winner</th>
+                    <th scope="col">Processed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="wager, iStat: ${wagers}">
+                    <td>
+                        <button type="button" class="btn btn-primary">remove</button>
+                    </td>
+                    <th th:text="${iStat.index + 1}" scope="row">1</th>
+                    <td>MTK-FTC - 2018.01.12.</td>
+                    <td>Football match</td>
+                    <td>Winner</td>
+                    <td>MTK</td>
+                    <td>1:2</td>
+                    <td th:text="${wager.amount}">$10 000 USD</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

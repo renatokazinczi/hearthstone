@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bets</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">SportsBetting</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="../home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../events">Events</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">English</a>
+                    <a class="dropdown-item" href="#">Magyar</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button type="button" class="btn btn-dark border">Logout</button>
+</nav>
+
+<div class="card text-white border-primary mb-3" style="margin-left: 10px !important; margin-right: 10px !important; margin-top: 20px">
+    <div class="card-header bg-primary mb-3" style="margin-bottom: 0px !important;">Events</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" style="color: black;">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Event title</th>
+                    <th scope="col">Event type</th>
+                    <th scope="col">Event start</th>
+                    <th scope="col">Event end</th>
+                    <th scope="col">Bet type</th>
+                    <th scope="col">Bet description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bet: ${bets}">
+                    <td>
+                        <form th:action="@{/wager/{path}(path=${bet.outcomeOddId})}" method="get">
+                            <button type="submit" th:id="${bet.outcomeOddId}" class="btn btn-primary">Set Wager</button>
+                        </form>
+                    </td>
+                    <td th:text="${bet.title}">title</td>
+                    <td th:text="${bet.type}">type</td>
+                    <td th:text="${bet.startDate}">start</td>
+                    <td th:text="${bet.endDate}">end</td>
+                    <td th:text="${bet.betType}">bet type</td>
+                    <td th:text="${bet.outcomeDesc}">bet desc</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

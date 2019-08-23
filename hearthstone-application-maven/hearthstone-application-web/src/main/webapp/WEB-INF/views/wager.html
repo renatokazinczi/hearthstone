@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Wager</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">SportsBetting</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link" href="../home">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="../events">Events</a>
+				</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Language </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="#">English</a> <a
+							class="dropdown-item" href="#">Magyar</a>
+					</div></li>
+			</ul>
+		</div>
+		<button type="button" class="btn btn-dark border">Logout</button>
+	</nav>
+	<div class="card text-white border-primary mb-3"
+		style="margin-left: 10px !important; margin-right: 10px !important; margin-top: 20px">
+		<div class="card-header bg-primary mb-3" style="margin-bottom: 0px !important;">Wager details</div>
+		<div class="card-body">
+			<form th:object="${wagerResult}" th:action="@{/processWager/{path}(path=${outcomeOddId})}" method="POST">
+					<div class="form-group">
+						<label for="disabledTextInput" style="color: black">Event title - start date</label> 
+						<input type="text" id="disabledTextInput" class="form-control" th:value="${wager.title + ' - ' + wager.startDate}" readonly>
+					</div>
+					<div class="form-group">
+                        <label for="disabledTextInput" style="color: black">Event type</label> 
+                        <input type="text" id="disabledTextInput" class="form-control" th:value="${wager.type}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput" style="color: black">Event start - Event end</label> 
+                        <input type="text" id="disabledTextInput" class="form-control" th:value="${wager.startDate + ' - ' + wager.endDate}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput" style="color: black">Bet type</label> 
+                        <input type="text" id="disabledTextInput" class="form-control" th:value="${wager.betType}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput" style="color: black">Outcome</label> 
+                        <input type="text" id="disabledTextInput" class="form-control" th:value="${wager.outcomeDesc}" readonly>
+                    </div>
+				<div class="form-group">
+                    <label for="disabledTextInput" style="color: black">Amount</label> 
+                    <input th:field="*{amount}" type="text" class="form-control" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="disabledTextInput" style="color: black">Currency</label> 
+                    <input type="text" id="disabledTextInput" class="form-control" th:value="${wager.currency}" readonly>
+                </div>
+				<input type="submit" class="btn btn-primary" value="Save">
+				<button onclick="window.history.go(-1); return false;" class="btn btn-danger">Cancel</button>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
